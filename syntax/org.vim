@@ -218,7 +218,7 @@ if !exists('g:loaded_org_syntax')
 					break
 				endif
 			endfor
-			silent! exec 'syntax match org_todo_keyword_' . l:_i . ' /\*\{1,\}\s\{1,\}\zs' . l:_i .'\(\s\|$\)/ ' . a:todo_headings
+			silent! exec 'syntax match org_todo_keyword_' . l:_i . ' /\*\{1,\}\s\{1,\}\zs' . l:_i .'\ze\(\s\|$\)/ ' . a:todo_headings
 			silent! exec 'hi def link org_todo_keyword_' . l:_i . ' ' . l:group
 		endfor
 	endfunction
