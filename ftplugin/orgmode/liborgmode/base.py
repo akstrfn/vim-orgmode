@@ -144,46 +144,49 @@ class MultiPurposeList(UserList):
 		self._changed()
 
 
-def get_domobj_range(content=[], position=0, direction=Direction.FORWARD, identify_fun=None):
-	u"""
-	Get the start and end line number of the dom obj lines from content.
+def get_domobj_range(content="", position=0, direction=Direction.FORWARD, identify_fun=None):
+	""" Get the start and end line number of the dom obj lines from content.
 
-	:content:		String to be recognized dom obj
-	:positon:		Line number in content
-	:direction:		Search direction
-	:identify_fun:  A identify function to recognize dom obj(Heading, Checkbox) title string.
+	Args:
+		content (str): String to be recognized dom obj
+		position (int):	Line number in content where the search starts
+		direction (Direction): Search direction
+		identify_fun: An identify function to recognize dom obj(Heading,
+			Checkbox) title string.
 
-	:return:		Start and end line number for the recognized dom obj.
+	Returns:
+		Tuple: (start, end) line numbers for the recognized dom obj or (None,
+			None) if they were not found.
 	"""
 	len_cb = len(content)
 
 	if len_cb < position < 0:
 		raise IndexError("position is not in the range of the content")
 
-	tmp_line = position
 	start = None
 	end = None
 
 	if direction == Direction.FORWARD:
-		while tmp_line < len_cb:
-			if identify_fun(content[tmp_line]) is not None:
+		for line_no in range(position, len_cb):
+			if identify_fun(content[line_no]):
 				if start is None:
-					start = tmp_line
+					start = line_no
 				elif end is None:
-					end = tmp_line - 1
-				if start is not None and end is not None:
+					end = line_no - 1
 					break
-			tmp_line += 1
 	else:
-		while tmp_line >= 0 and tmp_line < len_cb:
-			if identify_fun(content[tmp_line]) is not None:
-				if start is None:
-					start = tmp_line
-				elif end is None:
-					end = tmp_line - 1
-				if start is not None and end is not None:
-					break
-			tmp_line -= 1 if start is None else -1
+		# TODO: this searches with position being the middle, I've just
+		# refactored it but considering that forward search is different this
+		# behaviour can be confusing? Few tests are failing when there is no
+		# position + 1. This behaviour is very likely incorrect.
+		for line_no in reversed(range(position + 1)):
+			if identify_fun(content[line_no]):
+				start = line_no
+				break
+		for line_no in range(position + 1, len_cb):
+			if identify_fun(content[line_no]):
+				end = line_no - 1
+				break
 
 	return (start, end)
 
