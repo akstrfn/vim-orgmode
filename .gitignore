@@ -4,3 +4,5 @@ tags
 .ropeproject
 .cover*
 cover*
+
+.cache/
