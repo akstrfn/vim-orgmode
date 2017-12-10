@@ -157,8 +157,8 @@ def get_domobj_range(content=[], position=0, direction=Direction.FORWARD, identi
 	"""
 	len_cb = len(content)
 
-	if position < 0 or position > len_cb:
-		return (None, None)
+	if len_cb < position < 0:
+		raise IndexError("position is not in the range of the content")
 
 	tmp_line = position
 	start = None
