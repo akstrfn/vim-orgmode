@@ -5,6 +5,11 @@ from datetime import timedelta, date, datetime
 import operator
 
 import vim
+try:
+	vim.__file__
+	from vim import vim
+except:
+	pass
 
 from orgmode._vim import ORGMODE, echom, insert_at_cursor, get_user_input
 from orgmode import settings

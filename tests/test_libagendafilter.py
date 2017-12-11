@@ -17,7 +17,7 @@ from orgmode.liborgmode.agendafilter import is_within_week
 from orgmode.liborgmode.agendafilter import is_within_week_and_active_todo
 from orgmode.liborgmode.agendafilter import filter_items
 
-import vim
+from vim import vim
 
 from orgmode.py3compat.encode_compatibility import *
 

@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import vim
+try:
+	vim.__file__
+	from vim import vim
+except:
+	pass
+
 from orgmode._vim import echo, echom, echoe, ORGMODE, apply_count, repeat, insert_at_cursor, indent_orgmode
 from orgmode import settings
 from orgmode.menu import Submenu, Separator, ActionEntry, add_cmd_mapping_menu

@@ -11,7 +11,7 @@ from orgmode.exceptions import PluginError
 from orgmode._vim import ORGMODE
 from orgmode.keybinding import MODE_ALL, Plug
 
-import vim
+from vim import vim
 
 from orgmode.py3compat.encode_compatibility import *
 

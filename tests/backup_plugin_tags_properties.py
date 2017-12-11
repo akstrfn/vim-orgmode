@@ -5,11 +5,11 @@ import unittest
 import sys
 sys.path.append(u'../ftplugin')
 
-import vim
 
 from orgmode._vim import indent_orgmode, fold_orgmode, ORGMODE
-
 from orgmode.py3compat.encode_compatibility import *
+
+from vim import vim
 
 ORGMODE.debug = True
 
@@ -175,3 +175,5 @@ Bla Bla bla bla
 
 def suite():
 	return unittest.TestLoader().loadTestsFromTestCase(TagsPropertiesTestCase)
+
+# vim: set noexpandtab:

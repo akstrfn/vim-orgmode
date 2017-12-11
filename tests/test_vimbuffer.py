@@ -4,7 +4,7 @@ import unittest
 import sys
 sys.path.append(u'../ftplugin')
 
-import vim
+from vim import vim
 
 from orgmode.liborgmode.headings import Heading
 from orgmode.vimbuffer import VimBuffer
@@ -1255,3 +1255,5 @@ def suite():
 			unittest.TestLoader().loadTestsFromTestCase(VimBufferTagsTestCase), \
 			unittest.TestLoader().loadTestsFromTestCase(VimBufferTodoTestCase), \
 			)
+
+# vim: set noexpandtab:

@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import vim
+try:
+	vim.__file__
+	from vim import vim
+except:
+	pass
 
 from orgmode.keybinding import Command, Plug, Keybinding
 from orgmode.keybinding import MODE_ALL, MODE_NORMAL, MODE_VISUAL, MODE_INSERT

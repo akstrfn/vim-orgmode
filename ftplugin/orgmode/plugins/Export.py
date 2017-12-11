@@ -4,6 +4,11 @@ import os
 import subprocess
 
 import vim
+try:
+	vim.__file__
+	from vim import vim
+except:
+	pass
 
 from orgmode._vim import ORGMODE, echoe, echom
 from orgmode.menu import Submenu, ActionEntry, add_cmd_mapping_menu

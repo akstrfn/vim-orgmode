@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import vim
+try:
+	vim.__file__
+	from vim import vim
+except:
+	pass
 
 MODE_ALL = u'a'
 MODE_NORMAL = u'n'

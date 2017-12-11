@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import vim
+try:
+	vim.__file__
+	from vim import vim
+except:
+	pass
 
 from orgmode._vim import echo, echom, echoe, ORGMODE, apply_count, repeat
 from orgmode.menu import Submenu, Separator, ActionEntry

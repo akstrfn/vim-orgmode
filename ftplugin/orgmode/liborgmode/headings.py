@@ -10,6 +10,12 @@
 import re
 
 import vim
+try:
+	vim.__file__
+	from vim import vim
+except:
+	pass
+
 from orgmode.liborgmode.base import MultiPurposeList, flatten_list, Direction, get_domobj_range
 from orgmode.liborgmode.orgdate import OrgTimeRange
 from orgmode.liborgmode.orgdate import get_orgdate

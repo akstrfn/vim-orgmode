@@ -24,6 +24,11 @@ except:
 	from UserList import UserList
 
 import vim
+try:
+	vim.__file__
+	from vim import vim
+except:
+	pass
 
 from orgmode import settings
 from orgmode.exceptions import BufferNotFound, BufferNotInSync

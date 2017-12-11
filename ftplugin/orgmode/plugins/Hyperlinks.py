@@ -3,6 +3,11 @@
 import re
 
 import vim
+try:
+	vim.__file__
+	from vim import vim
+except:
+	pass
 
 from orgmode._vim import echom, ORGMODE, realign_tags
 from orgmode.menu import Submenu, Separator, ActionEntry

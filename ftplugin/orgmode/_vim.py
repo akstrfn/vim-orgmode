@@ -11,8 +11,14 @@ import imp
 import re
 import sys
 
-import vim
 from datetime import datetime
+
+import vim
+try:
+	vim.__file__
+	from vim import vim
+except:
+	pass
 
 import orgmode.keybinding
 import orgmode.menu

@@ -9,7 +9,7 @@ from orgmode.liborgmode.base import Direction
 from orgmode.vimbuffer import VimBuffer
 from orgmode.plugins.Todo import Todo
 
-import vim
+from vim import vim
 
 from orgmode.py3compat.encode_compatibility import *
 

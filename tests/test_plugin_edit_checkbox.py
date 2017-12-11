@@ -4,7 +4,7 @@ import unittest
 import sys
 sys.path.append(u'../ftplugin')
 
-import vim
+from vim import vim
 
 from orgmode._vim import ORGMODE
 

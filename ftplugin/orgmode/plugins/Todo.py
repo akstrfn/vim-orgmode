@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
+import itertools as it
 
 import vim
-import itertools as it
+try:
+	vim.__file__
+	from vim import vim
+except:
+	pass
 
 from orgmode._vim import echom, ORGMODE, apply_count, repeat, realign_tags
 from orgmode import settings

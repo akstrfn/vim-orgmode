@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import vim
+try:
+	vim.__file__
+	from vim import vim
+except:
+	pass
 
 import sys
 from orgmode.py3compat.encode_compatibility import *

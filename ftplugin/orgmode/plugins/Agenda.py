@@ -5,6 +5,11 @@ import os
 import glob
 
 import vim
+try:
+	vim.__file__
+	from vim import vim
+except:
+	pass
 
 from orgmode._vim import ORGMODE, get_bufnumber, get_bufname, echoe
 from orgmode import settings
