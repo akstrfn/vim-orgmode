@@ -19,7 +19,9 @@ def set_vim_buffer(buf=None, cursor=(2, 0), bufnr=0):
 		buf = []
 	vim.current.buffer[:] = buf
 	vim.current.window.cursor = cursor
-	vim.current.buffer.number = bufnr
+    # TODO: this setting of buffers does not work. I've just hacked around this
+    # for now.
+	# vim.current.buffer.number = bufnr
 
 
 counter = 0
@@ -93,8 +95,7 @@ class EditCheckboxTestCase(unittest.TestCase):
 """.split("\n")
 
 	def test_toggle(self):
-		global bufnr
-		bufnr += 1
+		bufnr = 1
 		# test on self.c1
 		set_vim_buffer(buf=self.c1, cursor=(6, 0), bufnr=bufnr)
 		# update_checkboxes_status
@@ -125,8 +126,7 @@ class EditCheckboxTestCase(unittest.TestCase):
 		self.editcheckbox.update_checkboxes_status()
 
 	def test_no_status_checkbox(self):
-		global bufnr
-		bufnr += 1
+		bufnr = 1
 		# test on self.c2
 		set_vim_buffer(buf=self.c2, bufnr=bufnr)
 		self.assertEqual(vim.current.buffer[2], u"  - checkbox [0%]")
@@ -140,24 +140,21 @@ class EditCheckboxTestCase(unittest.TestCase):
 		self.assertEqual(vim.current.buffer[2], u"  - checkbox [33%]")
 
 	def test_number_list(self):
-		global bufnr
-		bufnr += 1
+		bufnr = 1
 		set_vim_buffer(buf=self.c3, bufnr=bufnr)
 		vim.current.window.cursor = (6, 0)
 		self.editcheckbox.toggle()
 		self.assertEqual(vim.current.buffer[5], u"  2. [X] another main task")
 
 	def test_new_checkbox(self):
-		global bufnr
-		bufnr += 1
+		bufnr = 1
 		set_vim_buffer(buf=self.c4, bufnr=bufnr)
 		vim.current.window.cursor = (2, 1)
 		self.editcheckbox.new_checkbox(below=True)
 		self.assertEqual(vim.current.buffer[2], u"  - [ ] ")
 
 	def test_item_decrement(self):
-		global bufnr
-		bufnr += 1
+		bufnr = 1
 		set_vim_buffer(buf=self.c5, bufnr=bufnr)
 
 		vim.current.window.cursor = (3, 1)
@@ -184,8 +181,7 @@ class EditCheckboxTestCase(unittest.TestCase):
 		self.assertEqual(vim.current.buffer[8], u"  z. item")
 
 	def test_item_decrementA(self):
-		global bufnr
-		bufnr += 1
+		bufnr = 1
 		set_vim_buffer(buf=self.c5, bufnr=bufnr)
 		vim.current.window.cursor = (8, 1)
 		self.editcheckbox.new_checkbox(below=False, plain=True)
@@ -194,8 +190,7 @@ class EditCheckboxTestCase(unittest.TestCase):
 		self.assertEqual(vim.current.buffer[8], u"  A. item")
 
 	def test_item_increment(self):
-		global bufnr
-		bufnr += 1
+		bufnr = 1
 		set_vim_buffer(buf=self.c5, bufnr=bufnr)
 
 		vim.current.window.cursor = (3, 1)
@@ -210,8 +205,7 @@ class EditCheckboxTestCase(unittest.TestCase):
 		self.assertEqual(vim.current.buffer[6], u"  10. ")
 
 	def test_item_incrementz(self):
-		global bufnr
-		bufnr += 1
+		bufnr = 1
 		set_vim_buffer(buf=self.c5, bufnr=bufnr)
 
 		vim.current.window.cursor = (6, 1)

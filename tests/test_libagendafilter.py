@@ -31,6 +31,7 @@ class AgendaFilterTestCase(unittest.TestCase):
 		counter += 1
 
 		vim.EVALHISTORY = []
+		# TODO EVALRESULTS should be replaced with vim.command
 		vim.EVALRESULTS = {
 				# no org_todo_keywords for b
 				u_encode(u'exists("b:org_todo_keywords")'): u_encode('0'),
@@ -106,13 +107,11 @@ class AgendaFilterTestCase(unittest.TestCase):
 
 	def test_filter_items(self):
 		# only headings with date and todo should be returned
-		vim.EVALRESULTS[u_encode(u'g:org_todo_keywords')] = \
-				[u_encode(u'TODO'), u_encode(u'STARTED'), u_encode(u'|'), u_encode(u'DONE')]
+		vim.command(u_encode(u"let g:org_todo_keywords = ['TODO', 'STARTED', '|', 'DONE']"))
 		tmpdate = date.today()
 		odate = OrgDate(True, tmpdate.year, tmpdate.month, tmpdate.day)
 		tmp_head = Heading(title=u'Refactor the code', todo=u'TODO', active_date=odate)
 		tmp_head_01 = Heading(title=u'Refactor the code', todo=u'STARTED', active_date=odate)
-		# TODO add more tests
 		headings = [tmp_head, tmp_head_01]
 		filtered = list(filter_items(headings,
 				[contains_active_date, contains_active_todo]))

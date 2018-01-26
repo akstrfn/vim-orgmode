@@ -15,7 +15,7 @@ def set_vim_buffer(buf=None, cursor=(2, 0), bufnr=0):
 		buf = []
 	vim.current.buffer[:] = buf
 	vim.current.window.cursor = cursor
-	vim.current.buffer.number = bufnr
+	# vim.current.buffer.number = bufnr
 
 
 class CheckboxTestCase(unittest.TestCase):
@@ -97,7 +97,7 @@ class CheckboxTestCase(unittest.TestCase):
 		self.assertEqual(Checkbox.identify_checkbox(" - [ ]"), 1)
 
 	def test_toggle(self):
-		bufnr = 2
+		bufnr = 1
 		# test init_checkboxes
 		set_vim_buffer(buf=self.c1, bufnr=bufnr)
 		h = ORGMODE.get_document(bufnr=bufnr).current_heading()
@@ -114,7 +114,7 @@ class CheckboxTestCase(unittest.TestCase):
 		self.assertEqual((total, on), (2, 1))
 
 	def test_subtasks(self):
-		bufnr = 3
+		bufnr = 1
 		set_vim_buffer(buf=self.c1, bufnr=bufnr)
 		h = ORGMODE.get_document(bufnr=bufnr).current_heading()
 		h.init_checkboxes()
