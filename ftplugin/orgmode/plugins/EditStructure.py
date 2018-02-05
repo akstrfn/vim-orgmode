@@ -257,7 +257,9 @@ class EditStructure(object):
 		d.write()
 
 		# restore cursor position
-		vim.current.window.cursor = (c[0], c[1] + level)
+		tmp_row = c[1] + level
+		tmp_row = 0 if tmp_row < 0 else tmp_row
+		vim.current.window.cursor = (c[0], tmp_row)
 
 		return True
 
