@@ -43,7 +43,7 @@ class EditStructureTestCase(unittest.TestCase):
 		if not u'EditStructure' in ORGMODE.plugins:
 			ORGMODE.register_plugin(u'EditStructure')
 		self.editstructure = ORGMODE.plugins[u'EditStructure']
-		vim.current.buffer[:] = [ u_encode(i) for i in u"""
+		vim.current.buffer[:] = [u_encode(i) for i in u"""
 * Überschrift 1
 Text 1
 
@@ -199,7 +199,7 @@ Bla Bla bla bla
 		self.assertEqual(vim.current.buffer[18], u_encode(u'* Überschrift 3'))
 
 	def test_new_heading_below_split_heading_title(self):
-		vim.current.buffer[:] = [ u_encode(i) for i in u"""
+		vim.current.buffer[:] = [u_encode(i) for i in u"""
 * Überschrift 1  :Tag:
 Text 1
 
@@ -330,7 +330,7 @@ Bla Bla bla bla
 		# actually the indentation comes through vim, just the heading is updated
 		self.assertEqual(vim.current.buffer[14], u_encode(u'Bla Bla bla bla'))
 		self.assertEqual(vim.current.buffer[15], u_encode(u'*** Überschrift 1.2.1'))
-		self.assertEqual(vim.current.window.cursor, (13, -1))
+		self.assertEqual(vim.current.window.cursor, [13, 0])
 
 	def test_promote_level_one_heading(self):
 		vim.current.window.cursor = (2, 0)
@@ -359,12 +359,16 @@ Bla Bla bla bla
 		self.assertEqual(vim.current.buffer[12], u_encode(u'*** Überschrift 1.2.1.falsch'))
 		self.assertEqual(vim.current.buffer[15], u_encode(u'** Überschrift 1.2.1'))
 		self.assertEqual(vim.current.buffer[16], u_encode(u'* Überschrift 2'))
-		self.assertEqual(vim.current.window.cursor, [10, -1])
+		self.assertEqual(vim.current.window.cursor, [10, 0])
 
 	# run tests with count
 	def test_demote_parent_heading_count(self):
 		vim.current.window.cursor = (2, 0)
-		vim.command(u_encode(u"v:count = 3"))
+		# TODO v:count does not work without https://github.com/tpope/vim-repeat
+		# so do this manually
+		# vim.command(u_encode(u"v:count = 3"))
+		self.assertNotEqual(self.editstructure.demote_heading(), None)
+		self.assertNotEqual(self.editstructure.demote_heading(), None)
 		self.assertNotEqual(self.editstructure.demote_heading(), None)
 		self.assertEqual(vim.current.buffer[1], u_encode(u'**** Überschrift 1'))
 		self.assertEqual(vim.current.buffer[5], u_encode(u'***** Überschrift 1.1'))
@@ -377,14 +381,18 @@ Bla Bla bla bla
 
 	def test_promote_parent_heading2(self):
 		vim.current.window.cursor = (13, 0)
-		vim.command(u_encode("v:count = 3"))
+		# TODO v:count does not work without https://github.com/tpope/vim-repeat
+		# so do this manually
+		# vim.command(u_encode(u"v:count = 3"))
+		self.assertNotEqual(self.editstructure.promote_heading(), None)
+		self.assertNotEqual(self.editstructure.promote_heading(), None)
 		self.assertNotEqual(self.editstructure.promote_heading(), None)
 		self.assertEqual(vim.current.buffer[5], u_encode(u'** Überschrift 1.1'))
 		self.assertEqual(vim.current.buffer[9], u_encode(u'** Überschrift 1.2'))
 		self.assertEqual(vim.current.buffer[12], u_encode(u'* Überschrift 1.2.1.falsch'))
 		self.assertEqual(vim.current.buffer[15], u_encode(u'** Überschrift 1.2.1'))
 		self.assertEqual(vim.current.buffer[16], u_encode(u'* Überschrift 2'))
-		self.assertEqual(vim.current.window.cursor, [13, -3])
+		self.assertEqual(vim.current.window.cursor, [13, 0])
 
 def suite():
 	return unittest.TestLoader().loadTestsFromTestCase(EditStructureTestCase)
