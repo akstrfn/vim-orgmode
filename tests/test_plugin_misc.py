@@ -6,19 +6,14 @@ import sys
 sys.path.append(u'../ftplugin')
 
 from vim import vim
-
 from orgmode._vim import indent_orgmode, fold_orgmode, ORGMODE
-
 from orgmode.py3compat.encode_compatibility import *
 
 ORGMODE.debug = True
 
-START = True
-END = False
-
 def foldlevel(line):
 	""" Helper function to call get the fold level of a specific line """
-	return int(vim.command_output("echo foldlevel({})".format(line)))
+	return int(vim.eval("foldlevel({})".format(line)))
 
 counter = 0
 class MiscTestCase(unittest.TestCase):
@@ -63,6 +58,9 @@ Bla Bla bla bla
 		# TODO this wont work on CI because now it loads my local org setup probably
 		vim.command("set ft=org")
 
+	def tearDown(self):
+		vim.command("set ft=")
+
 	def test_all_fold_levels(self):
 		# first line is 0 because vim counts from 1
 		folds = [0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 3, 1, 1, 1]
@@ -93,8 +91,8 @@ Bla Bla bla bla
 
 	# TODO: indent_level and fold_expr variables should be phased out in the
 	# future to simplify the folding and indenting. Commented them out until
-	# some better way of doing this is found. Since now all of these tests are
-	# broken
+	# better way of doing this is found and implemented. Since now all of these
+	# tests are broken and partially unecessary when other tests are working.
 	# def test_indent_heading_middle(self):
 	# 	# test first heading
 	# 	vim.current.window.cursor = (3, 0)
