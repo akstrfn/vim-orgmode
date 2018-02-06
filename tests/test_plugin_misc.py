@@ -36,8 +36,7 @@ class MiscTestCase(unittest.TestCase):
 				u_encode(u"v:count"): u_encode(u'0'),
 				u_encode(u'b:changedtick'): u_encode(u'%d' % counter),
 				u_encode(u"v:lnum"): u_encode(u'0')}
-		vim.current.buffer[:] = [ u_encode(i) for i in u"""
-* Überschrift 1
+		vim.current.buffer[:] = [ u_encode(i) for i in u"""* Überschrift 1
 Text 1
 
 Bla bla
@@ -56,9 +55,19 @@ Bla Bla bla bla
 * Überschrift 3
   asdf sdf
 """.split(u'\n') ]
+		ORGMODE.start()
 
+	def test_all_folds(self):
+		# TODO this wont work on CI because now it loads my org setup probably
+		vim.command("set ft=org")
+		folds = [0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 3, 1, 1, 1]
+		for num, fold_lvl in enumerate(folds):
+			vim_lvl = vim.command_output("echo foldlevel({})".format(num))
+			self.assertEqual(fold_lvl, int(vim_lvl))
+
+	# TODO convert these tests to something useful. These tests should be with
+	# feedkeys(">>") and similar.
 	def test_indent_noheading(self):
-		# test first heading
 		vim.current.window.cursor = (1, 0)
 		vim.EVALRESULTS[u_encode(u'v:lnum')] = u_encode(u'1')
 		indent_orgmode()
