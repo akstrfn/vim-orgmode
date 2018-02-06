@@ -44,14 +44,24 @@ class MappingTestCase(unittest.TestCase):
 	def setUp(self):
 		self.keybindings = []
 
+		# this has to be registered since some plugins execute :au orgmode and
+		# the group can not be found
+		vim.command("""
+augroup orgmode
+	au BufEnter * :if &filetype == "org" | call <SID>OrgRegisterMenu() | endif
+	au BufLeave * :if &filetype == "org" | call <SID>OrgUnregisterMenu() | endif
+	au BufDelete * :call <SID>OrgDeleteUnusedDocument(expand('<abuf>'))
+augroup END
+""")
+		# TODO: this is obsolete with nvim testing
 		vim.EVALRESULTS = {
 				u'exists("g:org_debug")': 0,
 				u'exists("b:org_debug")': 0,
 				u'exists("*repeat#set()")': 0,
 				u'b:changedtick': 0,
-				u_encode(u'exists("b:org_plugins")'): 0,
-				u_encode(u'exists("g:org_plugins")'): 1,
-				u_encode(u'g:org_plugins'): ORG_PLUGINS,
+				u'exists("b:org_plugins")': 0,
+				u'exists("g:org_plugins")': 1,
+				u'g:org_plugins': ORG_PLUGINS,
 				}
 		for plugin in filter(lambda p: p != '|', ORG_PLUGINS):
 			try:
