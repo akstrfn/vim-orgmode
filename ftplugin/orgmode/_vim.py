@@ -398,8 +398,7 @@ class OrgMode(object):
 			except BaseException as e:
 				import traceback
 				traceback.print_exc()
-		elif isinstance(plugins, list) or \
-				isinstance(plugins, tuple):
+		elif isinstance(plugins, list) or isinstance(plugins, tuple):
 			for p in plugins:
 				try:
 					self.register_plugin(p)

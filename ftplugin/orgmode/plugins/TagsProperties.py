@@ -205,11 +205,12 @@ else
 endif
 endfunction"""))
 
-		vim.command(u_encode(u"""function Org_realign_tags_on_insert_leave()
-if !exists('b:org_complete_tag_on_insertleave_au')
-	:au orgmode InsertLeave <buffer> %s ORGMODE.plugins[u'TagsProperties'].realign_tags()
-	let b:org_complete_tag_on_insertleave_au = 1
-endif
+		vim.command(u_encode(u"""
+function Org_realign_tags_on_insert_leave()
+	if !exists('b:org_complete_tag_on_insertleave_au')
+		:au orgmode InsertLeave <buffer> %s ORGMODE.plugins[u'TagsProperties'].realign_tags()
+		let b:org_complete_tag_on_insertleave_au = 1
+	endif
 endfunction""" % VIM_PY_CALL))
 
 		# this is for all org files opened after this file
