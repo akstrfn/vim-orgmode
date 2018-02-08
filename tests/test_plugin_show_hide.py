@@ -84,8 +84,8 @@ Bla bla
 		for i in range(len(vim.current.buffer)):
 			self.assertEqual(foldclosed(i), -1)
 		vim.feedkeys("zM")
-		for i in [-1, -1, 2, 2, 2, 2, -1, 7, 7]:
-			self.assertEqual(foldclosed(i), -1)
+		for i, val in enumerate([-1, -1, 2, 2, 2, 2, -1, 7, 7]):
+			self.assertEqual(foldclosed(i), val)
 
 		vim.current.window.cursor = (2, 0)
 		self.assertNotEqual(self.showhide.toggle_folding(), None)
@@ -230,10 +230,13 @@ Bla bla
 * Überschrift 3
   asdf sdf
 """.split(u'\n') ]
+		vim.current.window.cursor = (2, 0)
+		vim.command("set ft=org")
+		vim.feedkeys("zR")
+		vim.command("2,5foldclose!")
 		self.assertEqual(foldclosed(2), 2)
 		self.assertEqual(foldclosed(6), -1)
 		self.assertEqual(foldclosed(7), -1)
-		vim.current.window.cursor = (2, 0)
 
 		self.assertNotEqual(self.showhide.toggle_folding(reverse=True), None)
 		self.assertEqual(vim.CMDHISTORY[-1], u_encode(u'2,5foldopen!'))

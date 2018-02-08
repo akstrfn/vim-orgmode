@@ -36,7 +36,7 @@ class TodoTestCase(unittest.TestCase):
 				u_encode(u"v:count"): u_encode(u'0')
 				}
 
-		vim.current.buffer[:] = [ u_encode(i) for i in u"""
+		vim.current.buffer[:] = [u_encode(i) for i in u"""
 * Heading 1
 ** Text 1
 *** Text 2
