@@ -1,6 +1,9 @@
 import json
 
 import neovim
+# vim = neovim.attach('child', argv=json.loads('["nvim", "-u" , "NONE", "--embed"]'))
+# some tests, such as folding load my local org setup, which might not be a bad
+# thing and can be made to work in CI
 vim = neovim.attach('child', argv=json.loads('["nvim", "--embed"]'))
 
 # HACKS BEGIN: make tests work before all of them are converted to better ones
