@@ -1,10 +1,18 @@
+import os
 import json
+import tempfile
 
 import neovim
-# vim = neovim.attach('child', argv=json.loads('["nvim", "-u" , "NONE", "--embed"]'))
-# some tests, such as folding load my local org setup, which might not be a bad
-# thing and can be made to work in CI
-vim = neovim.attach('child', argv=json.loads('["nvim", "--embed"]'))
+
+# Create a temp init.vim file that will add orgmode to runtimepath
+orgdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+fdesc, fname = tempfile.mkstemp()
+with os.fdopen(fdesc, 'w') as f:
+	f.write("set rtp+={}".format(orgdir))
+
+nvim_json = '["nvim", "-u" , "{}", "--embed"]'.format(fname)
+vim = neovim.attach('child', argv=json.loads(nvim_json))
+os.unlink(fname)
 
 # HACKS BEGIN: make tests work before all of them are converted to better ones
 # now that we have neovim for testing

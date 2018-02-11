@@ -54,11 +54,7 @@ Bla Bla bla bla
   asdf sdf
 """.split(u'\n') ]
 		self.buff = vim.current.buffer[:]
-		# TODO this wont work on CI because now it loads my local org setup probably
 		vim.command("set ft=org")
-
-	def tearDown(self):
-		vim.command("set ft=")
 
 	def test_no_heading_toggle_folding(self):
 		vim.current.window.cursor = (1, 0)
@@ -76,8 +72,6 @@ Bla bla
 * Überschrift 3
   asdf sdf
 """.split(u'\n') ]
-		# TODO this wont work on CI because now it loads my local org setup probably'
-		# refresh new vim buffer
 		vim.command("set ft=org")
 
 		vim.feedkeys("zR")

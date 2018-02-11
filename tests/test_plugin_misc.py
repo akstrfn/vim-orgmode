@@ -55,11 +55,8 @@ Bla Bla bla bla
 * Überschrift 3
   asdf sdf
 """.split(u'\n') ]
-		# TODO this wont work on CI because now it loads my local org setup probably
 		vim.command("set ft=org")
-
-	def tearDown(self):
-		vim.command("set ft=")
+		vim.feedkeys("zM")
 
 	def test_all_fold_levels(self):
 		# first line is 0 because vim counts from 1
